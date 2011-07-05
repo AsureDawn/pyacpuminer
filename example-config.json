@@ -1,0 +1,13 @@
+{
+    "_comment": "You may remove these comments and any of",
+    "_comment": "the options below, and the defaults will",
+    "_comment": "be used.                                ",
+    "_comment": "Be sure that all options are followed by",
+    "_comment": "a comma except for the last one, and    ",
+    "_comment": "be sure to leave the opening and closing",
+    "_comment": "curly brackets! ({})                    ",
+    "RPC_HOST": "127.0.0.1",    "_comment": "RPC host to connect to",
+    "RPC_PORT": 8332,           "_comment": "Port to connect to on RPC_HOST",
+    "RPC_USER": "rpcuser",      "_comment": "User to authenticate as",
+    "RPC_PASS": "rpcpass",      "_comment": "Password for authentication"
+}
