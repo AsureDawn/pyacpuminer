@@ -1,22 +1,12 @@
 #-*- coding:utf-8 -*-
-import os
 import sys
-import time
 
 import argparse
-#import curl
-#import psutil
 import json
 
-PROGRAM_NAME = 'Asure CPUMiner'
-PROGRAM_DESC = 'Bitcoin CPU Miner written in Python'
-PROGRAM_VERSION = '0.1'
+from common import PROGRAM_NAME,PROGRAM_DESC,PROGRAM_VERSION
 
-if os.name is ('posix' or 'os2'):
-    # Process priority, higher number = lower priority
-    PROCESS_PRIORITY = 19
-else:
-    PROCESS_PRIORITY = psutil.IDLE_PRIORITY_CLASS
+__all__ = ['inparser', 'init_opts']
 
 DEFAULTS = {
     # host and port for RPC
@@ -52,27 +42,28 @@ authgroup.add_argument('-P', '--pass', type=str, dest='RPC_PASS',
                        default=DEFAULTS['RPC_PASS'],
                        help='Password used for RPC auth')
 
-args = vars(inparser.parse_args())
+def init_opts():
+    args = vars(inparser.parse_args())
 
-if args['HELP'] is True:
-    inparser.print_help()
-    sys.exit()
+    if args['HELP'] is True:
+        inparser.print_help()
+        sys.exit()
 
-# Various options, read from a specified config file,
-# config.json in the current directory (if present),
-# or from the defaults specified above.
-if args['CONFFILE'] is not None:
-    with open(args['CONFFILE']) as cf:
-        options = json.load(cf)
-else:
-    options = {}
+    # Various options, read from a specified config file,
+    # config.json in the current directory (if present),
+    # or from the defaults specified above.
+    if args['CONFFILE'] is not None:
+        with open(args['CONFFILE']) as cf:
+            options = json.load(cf)
+    else:
+        options = {}
 
-for option in DEFAULTS.iterkeys():
-    # Configuration from command line should override all others
-    if option not in options:
-        options[option] = args[option]
-    # Configuration from file should override defaults
-    elif args[option] != DEFAULTS[option]:
-        options[option] = args[option]
+    for option in DEFAULTS.iterkeys():
+        # Configuration from command line should override all others
+        if option not in options:
+            options[option] = args[option]
+        # Configuration from file should override defaults
+        elif args[option] != DEFAULTS[option]:
+            options[option] = args[option]
 
-print(json.dumps(options, indent=4))
+    return options
